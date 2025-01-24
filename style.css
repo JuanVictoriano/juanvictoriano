@@ -20,8 +20,8 @@ main {
     padding: 20px;
 }
 
-.about-me, .contact, .photo {
-    background-color: #FFFFFF;
+.about-me, .contact, .photo, .resume { 
+    background-color: #FFFFFF; 
     padding: 20px;
     margin-bottom: 20px;
     border-radius: 5px;
@@ -47,6 +47,7 @@ main {
     object-fit: cover;
 }
 
-#photo-upload {
-    display: none; 
+/* Added CSS for the iframe */
+.resume iframe {
+    border: 1px solid #ccc; 
 }
