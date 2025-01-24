@@ -7,7 +7,7 @@ body {
 
 header {
     background-color: #87CEFA;
-    color: #808080;
+    color: #FFFFFF;
     padding: 20px;
     text-align: center;
 }
@@ -47,7 +47,12 @@ main {
     object-fit: cover;
 }
 
-/* Added CSS for the iframe */
 .resume iframe {
     border: 1px solid #ccc; 
+}
+
+/* CSS for responsive image */
+.responsive-resume {
+    max-width: 100%; 
+    height: auto; 
 }
