@@ -14,15 +14,23 @@
     <main>
         <section class="photo">
             <h2>Hello!</h2>
-            <img id="profile-pic" src="profile-pic.JPG" alt="Profile Picture"> 
+            <img id="profile-pic" src="profile-pic.JPG" alt="Profile Picture">
         </section>
         <section class="about-me">
             <h2>About Me</h2>
-            <p>I'm a System Administrator based in NYC and Northern NJ, specializing in Salesforce CRM, ECM software, 
-                workforce management software, virtualization, and SaaS. I have a strong foundation in Salesforce 
-                Administration, including configuration, data management, and user provisioning. I'm experienced 
-                in managing Windows and Linux web servers, ensuring optimal performance and security. In my free 
+            <p>I'm a System Administrator based in NYC and Northern NJ, specializing in Salesforce CRM, ECM software,
+                workforce management software, virtualization, and SaaS. I have a strong foundation in Salesforce
+                Administration, including configuration, data management, and user provisioning. I'm experienced
+                in managing Windows and Linux web servers, ensuring optimal performance and security. In my free
                 time, I enjoy exploring the world of technology, engineering, astronomy and am a passionate fan of the Dragon Ball manga.</p>
+        </section>
+        <section class="projects">
+            <h2>Projects</h2>
+            <ul>
+                <li><a href="#" target="_blank">Link 1</a></li>
+                <li><a href="#" target="_blank">Link 2</a></li>
+                <li><a href="#" target="_blank">Link 3</a></li>
+            </ul>
         </section>
         <section class="contact">
             <h2>Contact Me</h2>
@@ -33,8 +41,16 @@
         </section>
         <section class="resume">
             <h2>Resume</h2>
-            <iframe src="Juan Victoriano SCA.pdf" width="100%" height="auto"></iframe> 
+            <iframe src="Juan Victoriano SCA.pdf" width="100%" height="auto"></iframe>
         </section>
     </main>
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+    <script>
+        const today = new Date();
+        const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+        document.getElementById("footer-text").textContent = `${formattedDate} | thank you for visiting my website`;
+    </script>
 </body>
 </html>
