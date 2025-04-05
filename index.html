@@ -5,8 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juan Victoriano</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
+    <nav>
+        <a href="#about">About</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+        <a href="#resume">Resume</a>
+    </nav>
     <header>
         <h1>Juan Victoriano</h1>
         <p>System Administrator</p>
@@ -16,34 +24,38 @@
             <h2>Hello!</h2>
             <img id="profile-pic" src="profile-pic.JPG" alt="Profile Picture">
         </section>
-        <section class="about-me">
+        <section id="about" class="about-me">
             <h2>About Me</h2>
-            <p>I'm a System Administrator based in NYC and Northern NJ, specializing in Salesforce CRM, 
-                ECM software, workforce management software, virtualization, and SaaS. I have a strong 
-                foundation in Salesforce administration, including configuration, data management, 
-                and user provisioning. Additionally, I have experience managing Windows and Linux 
-                web servers, ensuring optimal performance and security. In my free time, I enjoy 
-                exploring technology, engineering, and astronomy, and I am an ardent fan 
-                of the <em>Dragon Ball</em> manga.</p>
+            <p>I'm a System Administrator based in NYC and Northern NJ, specializing in Salesforce CRM, ECM software, workforce management software, virtualization, and SaaS. I have a strong foundation in Salesforce administration, including configuration, data management, and user provisioning. I also manage Windows and Linux web servers, ensuring optimal performance and security. In my free time, I explore technology, engineering, and astronomy—and I'm an avid fan of the <em>Dragon Ball</em> manga.</p>
         </section>
-        <section class="projects">
+        <section id="projects" class="projects">
             <h2>Projects</h2>
             <ul>
-                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/discount.apex" target="_blank">Apex | discount formula field</a></li>
-                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/hr_script_02.ps1" target="_blank">PowerShell | script creates index file</a></li>
-                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/system_info.sh" target="_blank">Linux | system info shell script</a></li>
+                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/discount.apex" target="_blank">Apex | Discount Formula Field</a></li>
+                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/hr_script_02.ps1" target="_blank">PowerShell | Script Creates Index File</a></li>
+                <li><a href="https://github.com/JuanVictoriano/CodeProject/blob/master/system_info.sh" target="_blank">Linux | System Info Shell Script</a></li>
             </ul>
         </section>
-        <section class="contact">
+        <section id="contact" class="contact">
             <h2>Contact Me</h2>
             <ul>
-                <li><a href="mailto:jvictoriano410@gmail.com">jvictoriano410@gmail.com</a></li>
-                <li><a href="tel:646-737-4915">646-737-4915</a></li>
+                <li><a href="mailto:jvictoriano410@gmail.com"><i class="fas fa-envelope"></i> jvictoriano410@gmail.com</a></li>
+                <li><a href="tel:646-737-4915"><i class="fas fa-phone"></i> 646-737-4915</a></li>
             </ul>
         </section>
-        <section class="resume">
+        <section class="social">
+            <h2>Social Media</h2>
+            <ul>
+                <li><a href="https://www.linkedin.com/in/juanvictoriano" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn</a></li>
+                <li><a href="https://github.com/JuanVictoriano" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+            </ul>
+        </section>
+        <section id="resume" class="resume">
             <h2>Resume</h2>
-            <iframe src="Juan Victoriano SCA.pdf" width="100%" height="auto"></iframe>
+            <iframe src="Juan%20Victoriano%20SCA.pdf"></iframe>
+            <div class="download-resume">
+                <a href="Juan%20Victoriano%20SCA.pdf" download><i class="fas fa-download"></i> Download My Resume</a>
+            </div>
         </section>
     </main>
     <footer>
@@ -53,6 +65,19 @@
         const today = new Date();
         const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
         document.getElementById("footer-text").textContent = `${formattedDate}, thank you for visiting my website`;
+
+        // Reveal animations
+        const sections = document.querySelectorAll('section');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.1 });
+
+        sections.forEach(section => observer.observe(section));
     </script>
 </body>
 </html>
