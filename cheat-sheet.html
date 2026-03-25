@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IT SysAdmin Essential Guide</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Sora:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+  --color-white-smoke: #f8f7f3;
+  --color-ghost-white: #fafafa;
+  --color-white: #ffffff;
+  --color-black: #001c09;
+  --color-dark-gray: #094c24;
+
+  --gradient-linear: linear-gradient(to right, #0a4b23, #094c24);
+
+  --color-black-text: #000000;
+  --color-dark-gray-text: #1e1e1e;
+  --color-charcoal: #3c3c3c;
+  --color-light-gray: #d1d1d1;
+  --color-white-text: #ffffff;
+
+  --color-black-btn: #000000;
+  --color-lavender: #e5e7eb;
+
+  --bg: var(--color-white-smoke);
+  --surface: var(--color-white);
+  --surface2: var(--color-ghost-white);
+  --border: var(--color-light-gray);
+
+  --accent: #0a4b23;
+  --accent2: #094c24;
+  --accent3: #1e1e1e;
+  --accent4: #0a4b23;
+
+  --text: var(--color-black-text);
+  --text-muted: var(--color-black);
+  --text-dim: var(--color-light-gray);
+
+  --badge-h: 32px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Sora', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  padding: 0 0 80px;
+}
+
+/* HEADER */
+header {
+  background: var(--gradient-linear);
+  border-bottom: 1px solid var(--border);
+  padding: 48px 40px 40px;
+  position: relative;
+  overflow: hidden;
+}
+header::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -100px;
+  width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(124,108,255,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+header::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; left: -60px;
+  width: 300px; height: 300px;
+  background: radial-gradient(circle, rgba(0,212,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.header-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.header-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-label::before {
+  content: '';
+  display: inline-block;
+  width: 20px; height: 1px;
+  background: rgba(255,255,255,0.4);
+}
+
+h1 {
+  font-size: clamp(26px, 4vw, 40px);
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  color: var(--color-white-text);
+  margin-bottom: 16px;
+}
+
+.header-desc {
+  font-size: 15px;
+  color: rgba(255,255,255,0.8);
+  max-width: 560px;
+  line-height: 1.7;
+  margin-bottom: 28px;
+}
+
+.header-stats {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+.stat {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.stat-val {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-white-text);
+}
+.stat-label {
+  font-size: 11px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+/* LEGEND */
+.legend {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px 40px;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  border-bottom: 1px solid var(--border);
+}
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.pill-unix {
+  background: rgba(10, 75, 35, 0.1);
+  color: var(--accent);
+  border: 1px solid rgba(10, 75, 35, 0.2);
+}
+.pill-powershell {
+  background: rgba(9, 76, 36, 0.1);
+  color: var(--accent2);
+  border: 1px solid rgba(9, 76, 36, 0.2);
+}
+.pill-network {
+  background: rgba(60, 60, 60, 0.1);
+  color: var(--color-charcoal);
+  border: 1px solid rgba(60, 60, 60, 0.2);
+}
+.pill-rule {
+  background: rgba(30, 30, 30, 0.1);
+  color: var(--color-dark-gray-text);
+  border: 1px solid rgba(30, 30, 30, 0.2);
+}
+.pill-tip {
+  background: rgba(209, 209, 209, 0.2);
+  color: var(--color-dark-gray-text);
+  border: 1px solid rgba(209, 209, 209, 0.3);
+}
+
+/* PHASES */
+.phases {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 40px 40px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+
+.phase-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.phase-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dim);
+  letter-spacing: 0.1em;
+  padding-top: 4px;
+  min-width: 40px;
+}
+
+.phase-title-block { flex: 1; }
+
+.phase-title {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--color-black-text);
+  margin-bottom: 4px;
+}
+
+.phase-subtitle {
+  font-size: 13px;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.phase-accent {
+  width: 3px;
+  border-radius: 3px;
+  align-self: stretch;
+  min-height: 40px;
+}
+
+/* CARDS */
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding-left: 56px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 18px 22px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 12px;
+  align-items: start;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s, background 0.15s, transform 0.1s;
+  position: relative;
+  overflow: hidden;
+}
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+.card:hover {
+  border-color: var(--accent);
+  background: var(--surface2);
+  transform: translateX(2px);
+}
+.card:hover::before { opacity: 1; }
+
+/* no-hover static cards (for rules/ports) */
+.card-static {
+  cursor: default;
+}
+.card-static:hover {
+  transform: none;
+}
+
+.phase-1 .card::before,
+.phase-1 .phase-accent { background: var(--accent); }
+.phase-2 .card::before,
+.phase-2 .phase-accent { background: var(--accent2); }
+.phase-3 .card::before,
+.phase-3 .phase-accent { background: var(--color-charcoal); }
+.phase-4 .card::before,
+.phase-4 .phase-accent { background: var(--color-dark-gray-text); }
+
+.card-left { min-width: 0; }
+
+.card-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-black-text);
+  line-height: 1.3;
+}
+
+.card-desc {
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.card-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+/* Code badge (replaces card-points for commands) */
+.card-code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--accent);
+  background: rgba(10,75,35,0.07);
+  border: 1px solid rgba(10,75,35,0.15);
+  border-radius: 5px;
+  padding: 3px 8px;
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}
+
+.card-port {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--color-charcoal);
+  white-space: nowrap;
+}
+
+.card-rule-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text-dim);
+  line-height: 1;
+}
+
+/* INLINE CODE */
+code {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11.5px;
+  background: rgba(10,75,35,0.07);
+  border: 1px solid rgba(10,75,35,0.12);
+  border-radius: 4px;
+  padding: 1px 6px;
+  color: var(--accent);
+}
+
+/* PORT GROUPS inside phase 3 */
+.port-group {
+  margin-bottom: 6px;
+}
+.port-group-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 8px;
+  padding-left: 56px;
+}
+
+/* DIVIDER */
+.phase-divider {
+  border: none;
+  border-top: 1px dashed var(--border);
+  margin: 0;
+}
+
+/* FOOTER NOTE */
+.footer-note {
+  max-width: 900px;
+  margin: 48px auto 0;
+  padding: 20px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+.footer-note strong { color: var(--text); }
+
+.tip-label {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+
+@media (max-width: 600px) {
+  header { padding: 36px 20px 32px; }
+  .legend { padding: 16px 20px; }
+  .phases { padding: 28px 20px 0; }
+  .cards { padding-left: 0; }
+  .port-group-label { padding-left: 0; }
+  .footer-note { margin: 28px 20px 0; }
+  .card { grid-template-columns: 1fr; }
+  .card-right { flex-direction: row; align-items: center; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="header-label">Essential Reference Guide</div>
+    <h1>IT System Administrator<br>Cheat Sheet</h1>
+    <p class="header-desc">A practical reference for Unix/Linux, PowerShell, network ports, and the gold rules every SysAdmin lives by.</p>
+    <div class="header-stats">
+      <div class="stat"><span class="stat-val">4</span><span class="stat-label">Sections</span></div>
+      <div class="stat"><span class="stat-val">7</span><span class="stat-label">Unix Commands</span></div>
+      <div class="stat"><span class="stat-val">6</span><span class="stat-label">PS Cmdlets</span></div>
+      <div class="stat"><span class="stat-val">14</span><span class="stat-label">Key Ports</span></div>
+    </div>
+  </div>
+</header>
+
+<div class="legend">
+  <div class="legend-item"><span class="pill pill-unix">Unix</span> Linux commands</div>
+  <div class="legend-item"><span class="pill pill-powershell">PowerShell</span> Windows automation</div>
+  <div class="legend-item"><span class="pill pill-network">Network</span> ports &amp; protocols</div>
+  <div class="legend-item"><span class="pill pill-rule">Rule</span> gold standard practices</div>
+  <div class="legend-item"><span class="pill pill-tip">Warning</span> proceed with caution</div>
+</div>
+
+<div class="phases">
+
+  <!-- SECTION 1 -->
+  <div class="phase phase-1">
+    <div class="phase-header">
+      <span class="phase-num">01 /</span>
+      <div class="phase-accent"></div>
+      <div class="phase-title-block">
+        <div class="phase-title">Unix/Linux Mastery</div>
+        <div class="phase-subtitle">Efficiency, system health, and log analysis — the commands you'll reach for every single day.</div>
+      </div>
+    </div>
+    <div class="cards">
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Process Monitoring</span>
+          </div>
+          <div class="card-desc">Use <code>htop</code> for a better visual interface if installed — color-coded, scrollable, and lets you kill processes interactively. Fall back to <code>top</code> if htop isn't available.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">top / htop</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Recursive Log Search</span>
+          </div>
+          <div class="card-desc">Quickly finds matching strings across all log files in a directory. Swap <code>"error"</code> for any pattern — combine with <code>-i</code> for case-insensitive matching.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">grep -r "error" /var/log</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">File Permissions</span>
+          </div>
+          <div class="card-desc">Sets <code>rwxr-xr-x</code> — owner can read/write/execute; group and others can read and execute. Use <code>644</code> for files that shouldn't be executed.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">chmod 755 [file]</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Disk Usage</span>
+          </div>
+          <div class="card-desc">The <code>-h</code> flag outputs human-readable sizes (GB/MB) instead of raw blocks. Add <code>--max-depth=1</code> to drill into a specific directory's subdirectories.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">df -h</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Live Log View</span>
+          </div>
+          <div class="card-desc">Streams new log entries to your screen in real-time as they're written. Invaluable for watching deployments, monitoring auth attempts, or tailing application errors.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">tail -f [file]</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Port Audit</span>
+          </div>
+          <div class="card-desc">Shows exactly which PID is listening on which port. <code>-t</code> TCP, <code>-u</code> UDP, <code>-l</code> listening only, <code>-p</code> show PID, <code>-n</code> skip DNS resolution for speed.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">netstat -tulpn</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-unix">Unix</span>
+            <span class="card-title">Repeat Last Command as Root</span>
+          </div>
+          <div class="card-desc">Executes the previous command with <code>sudo</code> privileges. The <code>!!</code> expands to the full previous command — a huge time-saver when you forget to prefix with sudo.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">sudo !!</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="phase-divider">
+
+  <!-- SECTION 2 -->
+  <div class="phase phase-2">
+    <div class="phase-header">
+      <span class="phase-num">02 /</span>
+      <div class="phase-accent"></div>
+      <div class="phase-title-block">
+        <div class="phase-title">PowerShell Proficiency</div>
+        <div class="phase-subtitle">Automation, Active Directory, and Windows internals — cmdlets you'll use daily in any Windows environment.</div>
+      </div>
+    </div>
+    <div class="cards">
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">List Stopped Services</span>
+          </div>
+          <div class="card-desc">Pipes all services through a filter to surface only those not currently running — faster than scrolling through Services.msc for a quick health check.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Get-Service | Where-Object</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">Remote Port Check</span>
+          </div>
+          <div class="card-desc">A smarter alternative to ping — tests if a specific TCP port is open on a remote host. Use this before opening a ticket about connectivity; it tells you exactly where the block is.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Test-NetConnection</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">Filter System Errors</span>
+          </div>
+          <div class="card-desc">Cuts through event log noise to show only <code>Error</code>-level entries from the System log. Add <code>-Newest 50</code> to limit output, or <code>-Source</code> to narrow by application.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Get-EventLog</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">Find Disabled AD Accounts</span>
+          </div>
+          <div class="card-desc">Queries Active Directory for all disabled user accounts in one shot. Useful for quarterly access reviews, offboarding audits, or license cleanup before renewals.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Get-ADUser -Filter</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">Force Reboot</span>
+          </div>
+          <div class="card-desc">Forces a reboot on a hung or unresponsive machine, bypassing any "are you sure?" prompts. Add <code>-ComputerName [server]</code> to reboot a remote machine.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Restart-Computer -Force</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-powershell">PowerShell</span>
+            <span class="card-title">Remote Command Execution</span>
+          </div>
+          <div class="card-desc">Runs any command or script block on a remote server without opening RDP. Wrap multiple commands in the <code>ScriptBlock</code> — cleaner and faster than logging into each machine.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-code">Invoke-Command</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <hr class="phase-divider">
+
+  <!-- SECTION 3 -->
+  <div class="phase phase-3">
+    <div class="phase-header">
+      <span class="phase-num">03 /</span>
+      <div class="phase-accent"></div>
+      <div class="phase-title-block">
+        <div class="phase-title">Default Network Ports</div>
+        <div class="phase-subtitle">Memorize these for firewall rules and connectivity troubleshooting — the ports you'll reference on every ticket.</div>
+      </div>
+    </div>
+
+    <div class="port-group">
+      <div class="port-group-label">Remote Access &amp; Management</div>
+      <div class="cards">
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">SSH / SFTP — Secure Shell &amp; File Transfer</span>
+            </div>
+            <div class="card-desc">The standard for encrypted remote access and secure file transfer. Should be your default for any remote terminal work — never use Telnet.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:22</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="pill pill-tip">Warning</span>
+              <span class="card-title">Telnet — Unencrypted Remote Access</span>
+            </div>
+            <div class="card-desc">Transmits everything in plaintext — credentials included. Block it at the firewall. Only relevant for legacy hardware that doesn't support SSH.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:23</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">RDP — Remote Desktop Protocol</span>
+            </div>
+            <div class="card-desc">Windows GUI remote access. Always restrict this port to a VPN or specific IP ranges — exposed RDP on the internet is a primary ransomware vector.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:3389</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="port-group" style="margin-top:14px;">
+      <div class="port-group-label">Web &amp; Directory Services</div>
+      <div class="cards">
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">HTTP / HTTPS — Web Traffic</span>
+            </div>
+            <div class="card-desc">All modern web traffic should be on 443. If you see 80 open in production without a redirect, that's a misconfiguration. Force HTTPS at the load balancer or server level.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:80 / :443</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">DNS — Domain Name System (TCP/UDP)</span>
+            </div>
+            <div class="card-desc">Most queries run over UDP; TCP is used for large responses and zone transfers. If DNS is broken, nearly everything breaks — always check this first when connectivity goes down.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:53</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">LDAP / LDAPS — Active Directory</span>
+            </div>
+            <div class="card-desc">389 is unencrypted LDAP — prefer LDAPS on 636 in any environment handling credentials. Required for AD authentication, group policy, and directory lookups.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:389 / :636</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="port-group" style="margin-top:14px;">
+      <div class="port-group-label">File &amp; Email</div>
+      <div class="cards">
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">SMTP — Email Sending</span>
+            </div>
+            <div class="card-desc">Port 25 is server-to-server. Use 587 (STARTTLS) for client submission — most ISPs block outbound 25 from residential IPs to prevent spam.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:25 / :587</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">IMAP — Email Retrieval</span>
+            </div>
+            <div class="card-desc">143 is standard IMAP (unencrypted); 993 is IMAPS (SSL/TLS). Always configure clients to use 993. IMAP keeps mail on the server — good for multi-device access.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:143 / :993</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">SMB — Windows File Sharing</span>
+            </div>
+            <div class="card-desc">Used for Windows network shares, printers, and inter-process communication. Block this at your perimeter firewall — it should never be exposed to the internet (EternalBlue).</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:445</span>
+          </div>
+        </div>
+
+        <div class="card card-static">
+          <div class="card-left">
+            <div class="card-top">
+              <span class="pill pill-network">Network</span>
+              <span class="card-title">NFS — Network File System</span>
+            </div>
+            <div class="card-desc">Linux/Unix network file sharing. Restrict access via <code>/etc/exports</code> and firewall rules — NFS has no built-in encryption, so use it only on trusted internal networks.</div>
+          </div>
+          <div class="card-right">
+            <span class="card-port">:2049</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <hr class="phase-divider">
+
+  <!-- SECTION 4 -->
+  <div class="phase phase-4">
+    <div class="phase-header">
+      <span class="phase-num">04 /</span>
+      <div class="phase-accent"></div>
+      <div class="phase-title-block">
+        <div class="phase-title">The SysAdmin Gold Rules</div>
+        <div class="phase-subtitle">The principles that separate good administrators from great ones — internalize these and they'll save you from disasters.</div>
+      </div>
+    </div>
+    <div class="cards">
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-rule">Rule</span>
+            <span class="card-title">Rule of Least Privilege</span>
+          </div>
+          <div class="card-desc">Never give a user — or yourself — more access than is strictly necessary. Use a standard account for daily tasks and elevate only when required. Limits blast radius when something goes wrong.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-rule-num">01</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-rule">Rule</span>
+            <span class="card-title">Snapshot / Backup First</span>
+          </div>
+          <div class="card-desc">Before hitting Update or Delete, ensure you have a way back. A 5-minute backup saves a 5-hour restore. This applies to config files, databases, VMs, and anything you're about to touch.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-rule-num">02</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-rule">Rule</span>
+            <span class="card-title">The Reboot Reality</span>
+          </div>
+          <div class="card-desc">If a system is acting "weird," a reboot clears the stack and memory. It's often the most efficient first diagnostic step — eliminates transient issues before you spend hours chasing phantom bugs.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-rule-num">03</span>
+        </div>
+      </div>
+
+      <div class="card card-static">
+        <div class="card-left">
+          <div class="card-top">
+            <span class="pill pill-rule">Rule</span>
+            <span class="card-title">Document the "Why"</span>
+          </div>
+          <div class="card-desc">Don't just document what you changed — document why you changed it. Future-you (and your teammates) will need the context six months from now when something breaks and no one remembers the original reasoning.</div>
+        </div>
+        <div class="card-right">
+          <span class="card-rule-num">04</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<div style="max-width:900px; margin: 40px auto 0; padding: 0 40px;">
+  <div class="footer-note">
+    <div class="tip-label">📋 Quick Reference</div>
+    <strong>Unix/Linux commands</strong> work on any modern Linux distro and macOS terminal. Some (like <code>netstat</code>) may require <code>net-tools</code> to be installed — on newer systems, <code>ss -tulpn</code> is the preferred alternative. <br><br>
+    <strong>PowerShell cmdlets</strong> require the appropriate modules — <code>Get-ADUser</code> needs the <code>ActiveDirectory</code> RSAT module installed. Run PowerShell as Administrator for any commands that touch services, event logs, or remote machines. <br><br>
+    <strong>Port numbers</strong> listed are defaults — applications can be configured to listen on non-standard ports. Always verify with <code>netstat</code> or <code>ss</code> rather than assuming.
+  </div>
+</div>
+
+</body>
+</html>
