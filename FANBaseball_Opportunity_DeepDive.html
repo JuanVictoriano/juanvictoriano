@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FANBaseball — Opportunity Deep-Dive</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f5f5f0;--card:#fff;--card-border:#e0ddd5;--text:#1a1a1a;--muted:#6b6b6b;--accent:#2563eb;--green:#16a34a;--yellow:#ca8a04;--red:#dc2626;--green-bg:#f0fdf4;--yellow-bg:#fefce8;--red-bg:#fef2f2;--green-b:#bbf7d0;--yellow-b:#fef08a;--red-b:#fecaca;--blue-bg:#eff6ff;--blue-b:#bfdbfe;--mono:'JetBrains Mono',monospace;--sans:'DM Sans',sans-serif}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:var(--sans);background:var(--bg);color:var(--text);padding:24px;-webkit-font-smoothing:antialiased;font-size:11px}
+.header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:16px;padding-bottom:12px;border-bottom:2px solid var(--text)}
+.header h1{font-size:21px;font-weight:700;letter-spacing:-.5px}
+.header h1 .obj{color:var(--accent)}
+.header .meta{font-size:10px;color:var(--muted);text-align:right;line-height:1.6}
+.header .meta strong{color:var(--text)}
+.ss{display:grid;grid-template-columns:repeat(10,1fr);gap:6px;margin-bottom:14px}
+.ss-card{background:var(--card);border:1px solid var(--card-border);border-radius:5px;padding:8px 6px;text-align:center}
+.ss-card .val{font-family:var(--mono);font-size:15px;font-weight:700}
+.ss-card .lbl{font-size:7px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);margin-top:1px}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;margin-bottom:10px}
+.full{grid-column:1/-1}
+.panel{background:var(--card);border:1px solid var(--card-border);border-radius:5px;padding:12px}
+.panel h2{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--accent);margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:9.5px}
+th{text-align:left;font-size:7.5px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);padding:3px 5px;border-bottom:2px solid var(--card-border)}
+td{padding:3px 5px;border-bottom:1px solid #f0ede6}
+td.m{font-family:var(--mono);font-size:8.5px}
+tr:hover{background:#fafaf6}
+.re{background:var(--red-bg)}
+.bar-row{display:grid;grid-template-columns:55px 1fr 32px;align-items:center;gap:5px;font-size:9px;margin-bottom:3px}
+.bar-label{font-weight:600;color:var(--muted);font-size:8px;text-transform:uppercase;letter-spacing:.4px}
+.bar-track{height:14px;background:#eeece5;border-radius:3px;overflow:hidden;display:flex}
+.bar-seg{height:100%}
+.bar-val{font-family:var(--mono);font-size:9px;font-weight:600;text-align:right}
+.tag{display:inline-block;padding:1px 6px;border-radius:3px;font-size:8px;font-weight:600;margin:0 1px}
+.tag-red{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}
+.tag-yellow{background:var(--yellow-bg);border:1px solid var(--yellow-b);color:var(--yellow)}
+.tag-green{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green)}
+.tag-blue{background:var(--blue-bg);border:1px solid var(--blue-b);color:var(--accent)}
+.rec{padding:6px 9px;margin-bottom:4px;border-radius:4px;font-size:9.5px;line-height:1.45}
+.rec-high{background:var(--red-bg);border:1px solid var(--red-b)}
+.rec-med{background:var(--yellow-bg);border:1px solid var(--yellow-b)}
+.rec-low{background:var(--green-bg);border:1px solid var(--green-b)}
+.rec strong{font-weight:700}
+.scroll{max-height:200px;overflow-y:auto}
+.scroll::-webkit-scrollbar{width:3px}
+.scroll::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:2px}
+.divider{height:1px;background:var(--card-border);margin:8px 0}
+.footer{text-align:center;padding-top:10px;border-top:1px solid var(--card-border);font-size:8px;color:var(--muted);margin-top:6px}
+.note{padding:4px 8px;border-radius:4px;font-size:8.5px;margin-top:5px}
+.note-red{background:var(--red-bg);border:1px solid var(--red-b);color:var(--red)}
+.note-yellow{background:var(--yellow-bg);border:1px solid var(--yellow-b);color:var(--yellow)}
+.note-green{background:var(--green-bg);border:1px solid var(--green-b);color:var(--green)}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div>
+    <h1><span class="obj">Opportunity</span> — Deep-Dive Analysis</h1>
+    <div style="font-size:9px;color:var(--muted);margin-top:2px">FANBaseball Salesforce Org — Partnerships & Sponsorship Pipeline — Includes Field-Level Security Analysis</div>
+  </div>
+  <div class="meta"><strong>Report Date:</strong> April 6, 2026<br><strong>Health Score:</strong> <span class="tag tag-yellow">MEDIUM RISK</span></div>
+</div>
+
+<div class="ss">
+  <div class="ss-card"><div class="val">55,654</div><div class="lbl">Records</div></div>
+  <div class="ss-card"><div class="val">164</div><div class="lbl">Total Fields</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--red)">143</div><div class="lbl">Custom (87%)</div></div>
+  <div class="ss-card"><div class="val">21</div><div class="lbl">Standard</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--red)">33</div><div class="lbl">Empty (0%)</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--red)">30</div><div class="lbl">Unused Custom</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--yellow)">20.0%</div><div class="lbl">Avg Population</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--green)">22</div><div class="lbl">Required (100%)</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--accent)">66</div><div class="lbl">Profiles</div></div>
+  <div class="ss-card"><div class="val" style="color:var(--accent)">44</div><div class="lbl">Perm Sets</div></div>
+</div>
+
+<div class="g2">
+  <!-- Population Distribution -->
+  <div class="panel">
+    <h2>Population Distribution (164 Fields)</h2>
+    <div class="bar-row"><span class="bar-label">100%</span><div class="bar-track"><div class="bar-seg" style="width:13.4%;background:var(--green)"></div></div><span class="bar-val" style="color:var(--green)">22</span></div>
+    <div class="bar-row"><span class="bar-label">76–99%</span><div class="bar-track"><div class="bar-seg" style="width:4.3%;background:var(--green)"></div></div><span class="bar-val" style="color:var(--green)">7</span></div>
+    <div class="bar-row"><span class="bar-label">51–75%</span><div class="bar-track"><div class="bar-seg" style="width:1.8%;background:var(--green)"></div></div><span class="bar-val" style="color:var(--green)">3</span></div>
+    <div class="bar-row"><span class="bar-label">26–50%</span><div class="bar-track"><div class="bar-seg" style="width:1.2%;background:var(--yellow)"></div></div><span class="bar-val" style="color:var(--yellow)">2</span></div>
+    <div class="bar-row"><span class="bar-label">11–25%</span><div class="bar-track"><div class="bar-seg" style="width:1.2%;background:var(--yellow)"></div></div><span class="bar-val" style="color:var(--yellow)">2</span></div>
+    <div class="bar-row"><span class="bar-label">6–10%</span><div class="bar-track"><div class="bar-seg" style="width:2.4%;background:var(--red)"></div></div><span class="bar-val" style="color:var(--red)">4</span></div>
+    <div class="bar-row"><span class="bar-label">1–5%</span><div class="bar-track"><div class="bar-seg" style="width:55.5%;background:var(--red)"></div></div><span class="bar-val" style="color:var(--red)">91</span></div>
+    <div class="bar-row"><span class="bar-label">0%</span><div class="bar-track"><div class="bar-seg" style="width:20.1%;background:#ccc"></div></div><span class="bar-val">33</span></div>
+    <div class="note note-yellow">⚠ 78% of fields (128/164) at ≤10%. However, 22 fields at 100% is strong — driven by roll-ups and formulas.</div>
+  </div>
+
+  <!-- Field Type Distribution -->
+  <div class="panel">
+    <h2>Field Type Distribution</h2>
+    <table>
+      <tr><th>Type</th><th>Count</th><th>%</th><th>Notes</th></tr>
+      <tr><td>Checkbox</td><td class="m">40</td><td class="m">24.4%</td><td style="color:var(--yellow);font-weight:600">Abnormally high — review for consolidation</td></tr>
+      <tr><td>Picklist</td><td class="m">34</td><td class="m">20.7%</td><td></td></tr>
+      <tr><td>Date</td><td class="m">15</td><td class="m">9.1%</td><td></td></tr>
+      <tr><td>Lookup</td><td class="m">14</td><td class="m">8.5%</td><td></td></tr>
+      <tr><td>Formula</td><td class="m">13</td><td class="m">7.9%</td><td style="color:var(--green)">Good automation coverage</td></tr>
+      <tr><td>Roll-up Summary</td><td class="m">10</td><td class="m">6.1%</td><td style="color:var(--green)">Revenue roll-ups (2025–2030)</td></tr>
+      <tr><td>Text</td><td class="m">10</td><td class="m">6.1%</td><td></td></tr>
+      <tr><td>Text Area</td><td class="m">8</td><td class="m">4.9%</td><td></td></tr>
+      <tr><td>Currency</td><td class="m">8</td><td class="m">4.9%</td><td></td></tr>
+      <tr><td>Long Text Area</td><td class="m">3</td><td class="m">1.8%</td><td></td></tr>
+      <tr><td>Other</td><td class="m">9</td><td class="m">5.5%</td><td style="font-size:7.5px;color:var(--muted)">Number (3), Percent (2), Record Type, Email, Phone, Rich Text Area</td></tr>
+    </table>
+    <div class="note note-yellow">40 Checkbox fields (24%) is abnormal. Many are unused sales stage-gates. Consider Salesforce Path or multi-select picklist.</div>
+  </div>
+</div>
+
+<div class="g2">
+  <!-- FLS: Empty fields with access -->
+  <div class="panel">
+    <h2>🔑 FLS Alert: Empty Fields (0%) With Active Grants (32 Fields)</h2>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:6px">Every unused Opportunity field still has FLS active — all 32 empty fields are visible to users.</p>
+    <div class="scroll">
+      <table>
+        <tr><th>Field Label</th><th>Type</th><th>Grants</th><th>Read</th><th>Edit</th><th>Risk</th></tr>
+        <tr class="re"><td>Discovery Completed</td><td>Checkbox</td><td class="m">68</td><td class="m">68</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>ROI Analysis Completed</td><td>Checkbox</td><td class="m">68</td><td class="m">68</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Impact Type</td><td>Picklist</td><td class="m">67</td><td class="m">67</td><td class="m">6</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>6 Month Impact Review Date</td><td>Date</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Balance</td><td>Currency</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Contributed</td><td>Currency</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Date Paid</td><td>Date</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Funding Packet Received</td><td>Picklist</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Impact Category</td><td>Picklist</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Impact Market</td><td>Picklist</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Last Activity Date (Custom)</td><td>Date</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Payment Status</td><td>Text Area</td><td class="m">66</td><td class="m">66</td><td class="m">57</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Sponsor Tier</td><td>Picklist</td><td class="m">66</td><td class="m">66</td><td class="m">58</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Contract ID</td><td>Lookup</td><td class="m">65</td><td class="m">65</td><td class="m">54</td><td><span class="tag tag-red">Critical</span></td></tr>
+        <tr class="re"><td>Proposal Agreed</td><td>Checkbox</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>3rd Communication Date</td><td>Date</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Activation</td><td>Picklist</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Appointment/Event Follow-Up</td><td>Checkbox</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Campaign Type</td><td>Picklist</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Company Registration Number</td><td>Text</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Contact Point Email</td><td>Lookup</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Invoice Notes</td><td>Text Area</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Navigating Objections</td><td>Checkbox</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Parent Opportunity</td><td>Lookup</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Player Request</td><td>Picklist</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Proposal Shared Date</td><td>Date</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Pulse Report</td><td>Picklist</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Team Board Approved</td><td>Checkbox</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Total Sponsorship Fee</td><td>Currency</td><td class="m">43</td><td class="m">43</td><td class="m">32</td><td><span class="tag tag-red">High</span></td></tr>
+        <tr class="re"><td>Cost to Deliver %</td><td>Formula</td><td class="m">22</td><td class="m">22</td><td class="m">0</td><td><span class="tag tag-yellow">Medium</span></td></tr>
+        <tr class="re"><td>Margin %</td><td>Formula</td><td class="m">22</td><td class="m">22</td><td class="m">0</td><td><span class="tag tag-yellow">Medium</span></td></tr>
+      </table>
+    </div>
+    <div class="note note-red">⚠ Unlike Account, EVERY empty Opportunity field has FLS active (32/32). Two tiers visible: 14 fields at 65-68 grants (org-wide), 16 at 43 grants (likely a subset of sales profiles), 2 formulas at 22.</div>
+  </div>
+
+  <!-- Over-permissioned -->
+  <div class="panel">
+    <h2>🔑 Over-Permissioned: ≤5% Population, 15+ Grants (Top 15 of 108)</h2>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:6px">Opportunity has the highest count of over-permissioned fields across all objects.</p>
+    <div class="scroll">
+      <table>
+        <tr><th>Field Label</th><th>Pop %</th><th>Grants</th><th>Read</th><th>Edit</th></tr>
+        <tr><td>Rating</td><td class="m" style="color:var(--red)">2%</td><td class="m"><strong>71</strong></td><td class="m">71</td><td class="m">61</td></tr>
+        <tr><td>Description</td><td class="m" style="color:var(--red)">5%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">59</td></tr>
+        <tr><td>Next Step</td><td class="m" style="color:var(--red)">5%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">58</td></tr>
+        <tr><td>Agency Expiration Date</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">57</td></tr>
+        <tr><td>Budget Confirmed</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">57</td></tr>
+        <tr><td>Discovery Completed</td><td class="m" style="color:var(--red)">0%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">57</td></tr>
+        <tr><td>ROI Analysis Completed</td><td class="m" style="color:var(--red)">0%</td><td class="m"><strong>68</strong></td><td class="m">68</td><td class="m">57</td></tr>
+        <tr><td>Country</td><td class="m" style="color:var(--red)">4%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Length of Term</td><td class="m" style="color:var(--red)">3%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Proposed Category</td><td class="m" style="color:var(--red)">3%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Brand</td><td class="m" style="color:var(--red)">2%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>League Notes</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Other Notes</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Other</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+        <tr><td>Team Revenue Details</td><td class="m" style="color:var(--red)">1%</td><td class="m"><strong>66</strong></td><td class="m">66</td><td class="m">57</td></tr>
+      </table>
+    </div>
+    <div class="note note-red">⚠ 108 fields (66% of all Opportunity fields) are over-permissioned. 44 unique permission sets contribute — the highest perm set count across all objects.</div>
+  </div>
+</div>
+
+<div class="g2">
+  <!-- Required Fields + Read-only -->
+  <div class="panel">
+    <h2>Required Fields (100% Populated) — 22 Fields</h2>
+    <div class="scroll" style="max-height:180px">
+      <table>
+        <tr><th>Field Label</th><th>Type</th><th>Category</th><th>FLS Grants</th></tr>
+        <tr><td>Opportunity Name</td><td>Text</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Stage</td><td>Picklist</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Close Date</td><td>Date</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Opportunity Currency</td><td>Picklist</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Forecast Category</td><td>Picklist</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Probability (%)</td><td>Percent</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>Opportunity Lead</td><td>Lookup</td><td><span class="tag tag-blue">Standard</span></td><td class="m">—</td></tr>
+        <tr><td>2025 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>2026 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>2027 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>2028 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>2029 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>2030 Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>Total Contracted Value</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">66</td></tr>
+        <tr><td>Total Fulfilment Cost</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>Total Rights Value</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>Year One Revenue</td><td>Roll-up Summary</td><td><span class="tag tag-green">Roll-up</span></td><td class="m">22</td></tr>
+        <tr><td>Total Value</td><td>Formula</td><td><span class="tag tag-green">Formula</span></td><td class="m">66</td></tr>
+        <tr><td>Agency Commission Value</td><td>Formula</td><td><span class="tag tag-green">Formula</span></td><td class="m">22</td></tr>
+        <tr><td>API Opp ID</td><td>Formula</td><td><span class="tag tag-green">Formula</span></td><td class="m">66</td></tr>
+        <tr><td>PIF link</td><td>Formula</td><td><span class="tag tag-green">Formula</span></td><td class="m">22</td></tr>
+        <tr><td>Saudi links</td><td>Formula</td><td><span class="tag tag-green">Formula</span></td><td class="m">22</td></tr>
+      </table>
+    </div>
+    <div class="divider"></div>
+    <div style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Read-Only Fields (24 with no Edit grants)</div>
+    <div class="note note-green">✓ 24 fields are read-only — all Formulas and Roll-up Summaries. This is correct behavior; no action needed.</div>
+    <div class="divider"></div>
+    <div class="note note-red">⚠ No Auto Number or External ID field. API Opp ID (Formula) cannot serve as upsert key. Add an Auto Number for integration support.</div>
+  </div>
+
+  <!-- Notable observations -->
+  <div class="panel">
+    <h2>Notable Observations With FLS Context</h2>
+    <div style="margin-bottom:8px">
+      <div style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Abandoned Stage-Gate Checkboxes (All 0%, All With FLS)</div>
+      <table>
+        <tr><th>Field Label</th><th>Pop %</th><th>FLS Grants</th><th>Edit Grants</th></tr>
+        <tr class="re"><td>Discovery Completed</td><td class="m">0%</td><td class="m">68</td><td class="m">57</td></tr>
+        <tr class="re"><td>Navigating Objections</td><td class="m">0%</td><td class="m">43</td><td class="m">32</td></tr>
+        <tr class="re"><td>Proposal Agreed</td><td class="m">0%</td><td class="m">43</td><td class="m">32</td></tr>
+        <tr class="re"><td>ROI Analysis Completed</td><td class="m">0%</td><td class="m">68</td><td class="m">57</td></tr>
+        <tr class="re"><td>Team Board Approved</td><td class="m">0%</td><td class="m">43</td><td class="m">32</td></tr>
+        <tr class="re"><td>Appointment/Event Follow-Up</td><td class="m">0%</td><td class="m">43</td><td class="m">32</td></tr>
+      </table>
+      <div class="note note-red">Users can see AND edit these — yet nobody has ever used them. Revoke FLS and remove from page layouts.</div>
+    </div>
+    <div style="margin-bottom:8px">
+      <div style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Abandoned "Impact" Feature Set (4 Fields, 0%, High FLS)</div>
+      <div style="display:flex;gap:3px;flex-wrap:wrap;margin-bottom:4px">
+        <span class="tag tag-red">Impact Category · 66 grants</span>
+        <span class="tag tag-red">Impact Market · 66 grants</span>
+        <span class="tag tag-red">Impact Type · 67 grants</span>
+        <span class="tag tag-red">6 Month Impact Review · 66 grants</span>
+      </div>
+      <div class="note note-yellow">Impact Type has 67 read grants but only 6 edit grants — likely restricted intentionally but still cluttering views.</div>
+    </div>
+    <div>
+      <div style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.5px;margin-bottom:3px">Typo in API Name</div>
+      <div class="note note-yellow">Funding_Packet_<strong>Receieved</strong>__c — 66 FLS grants (highly visible). Misspelling of "Received". Cannot rename API names; requires field replacement.</div>
+    </div>
+  </div>
+</div>
+
+<!-- Picklist candidates -->
+<div class="g2">
+  <div class="panel">
+    <h2>Text → Picklist Candidates (17 Fields) With FLS</h2>
+    <table>
+      <tr><th>Field Label</th><th>Type</th><th>Pop %</th><th>Records</th><th>FLS Grants</th><th>Recommendation</th></tr>
+      <tr><td><strong>Purchaser Name</strong></td><td>Text</td><td class="m">13%</td><td class="m">7,233</td><td class="m">66</td><td style="font-size:8px">Keep as Text</td></tr>
+      <tr><td>Description</td><td>Long Text Area</td><td class="m">5%</td><td class="m">2,222</td><td class="m">68</td><td style="font-size:8px">Keep as Text</td></tr>
+      <tr><td>Next Step</td><td>Text</td><td class="m">5%</td><td class="m">2,043</td><td class="m">68</td><td style="font-size:8px">Keep as Text</td></tr>
+      <tr><td><strong>Proposed Category</strong></td><td>Text</td><td class="m">3%</td><td class="m">982</td><td class="m">66</td><td style="font-size:8px;color:var(--red);font-weight:600">Convert → Picklist</td></tr>
+      <tr><td><strong>Brand</strong></td><td>Text</td><td class="m">2%</td><td class="m">519</td><td class="m">66</td><td style="font-size:8px;color:var(--red);font-weight:600">Convert → Picklist</td></tr>
+      <tr><td><strong>Designation / s</strong></td><td>Text</td><td class="m">1%</td><td class="m">110</td><td class="m">66</td><td style="font-size:8px;color:var(--red);font-weight:600">Convert → Picklist</td></tr>
+      <tr><td><strong>Industry Type</strong></td><td>Text</td><td class="m">1%</td><td class="m">5</td><td class="m">66</td><td style="font-size:8px;color:var(--red);font-weight:600">Convert → Picklist</td></tr>
+      <tr><td>Loss Details</td><td>Text Area</td><td class="m">1%</td><td class="m">89</td><td class="m">66</td><td style="font-size:8px">Keep as Text</td></tr>
+      <tr><td>Other</td><td>Text Area</td><td class="m">1%</td><td class="m">80</td><td class="m">66</td><td style="font-size:8px;color:var(--yellow)">Review naming</td></tr>
+      <tr><td>Outbox Order Number</td><td>Text</td><td class="m">1%</td><td class="m">51</td><td class="m">66</td><td style="font-size:8px">Keep as Text</td></tr>
+      <tr><td colspan="6" style="text-align:center;font-style:italic;color:var(--muted);padding:3px">+ 7 more at 1% (Capabilities, Current Clients, Justification, League Notes, Net Term Notes, Other Notes, Team Revenue Details)</td></tr>
+    </table>
+  </div>
+
+  <!-- Permission set breakdown -->
+  <div class="panel">
+    <h2>🔑 Permission Set Breakdown (44 Sets)</h2>
+    <p style="font-size:9px;color:var(--muted);margin-bottom:6px">Opportunity has the most permission sets of any object — indicating complex access layering.</p>
+    <div class="scroll" style="max-height:160px">
+      <table>
+        <tr><th>Permission Set</th><th>Category</th></tr>
+        <tr><td>LIV ADMIN</td><td><span class="tag tag-blue">Admin</span></td></tr>
+        <tr><td>Admin Permission</td><td><span class="tag tag-blue">Admin</span></td></tr>
+        <tr><td>Edit Opportunities</td><td><span class="tag tag-blue">CRUD</span></td></tr>
+        <tr><td>Opportunity - CRE Permission</td><td><span class="tag tag-blue">CRUD</span></td></tr>
+        <tr><td>Opportunity - Read All Permission</td><td><span class="tag tag-blue">CRUD</span></td></tr>
+        <tr><td>Opportunity - Read Permission</td><td><span class="tag tag-blue">CRUD</span></td></tr>
+        <tr><td>Opportunity Modify All Permission</td><td><span class="tag tag-blue">CRUD</span></td></tr>
+        <tr><td>Can Delete LIV Opps</td><td><span class="tag tag-yellow">Custom</span></td></tr>
+        <tr><td>Can not see not LIV opps</td><td><span class="tag tag-yellow">Custom</span></td></tr>
+        <tr><td>Contracted Value</td><td><span class="tag tag-yellow">Custom</span></td></tr>
+        <tr><td>Lead Change / Lead Owner</td><td><span class="tag tag-yellow">Custom</span></td></tr>
+        <tr><td>P54 Opp Edit</td><td><span class="tag tag-yellow">Custom</span></td></tr>
+        <tr><td>Sales User</td><td><span class="tag tag-green">Role</span></td></tr>
+        <tr><td>Team Sales Rep Permission</td><td><span class="tag tag-green">Role</span></td></tr>
+        <tr><td>Teams Ops Manager</td><td><span class="tag tag-green">Role</span></td></tr>
+        <tr><td>Team Opp</td><td><span class="tag tag-green">Role</span></td></tr>
+        <tr><td colspan="2" style="text-align:center;font-style:italic;color:var(--muted);padding:3px">+ 28 more (integration, reporting, ticketing sets)</td></tr>
+      </table>
+    </div>
+    <div class="note note-yellow">Consider consolidating — "Can Delete LIV Opps", "Edit Opportunities", and "Opportunity - CRE Permission" may overlap. Permission set groups could simplify management.</div>
+  </div>
+</div>
+
+<!-- Recommendations -->
+<div class="panel" style="margin-bottom:10px">
+  <h2>Prioritized Recommendations</h2>
+  <div class="g3" style="margin-bottom:0">
+    <div>
+      <div style="font-size:8px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">🔴 High Priority</div>
+      <div class="rec rec-high"><strong>Revoke FLS on 32 empty fields, then delete 30 custom ones.</strong> Unlike Account, every empty Opp field has active grants (43-68 each). Must revoke FLS before deletion. Start with the 6 stage-gate checkboxes and 4 Impact fields.</div>
+      <div class="rec rec-high"><strong>Reduce checkbox count from 40.</strong> Replace stage-gate checkboxes with Salesforce Path or a single multi-select picklist. 6 checkboxes are at 0% with active FLS — immediate removal candidates.</div>
+      <div class="rec rec-high"><strong>Add an Auto Number field.</strong> API Opp ID (Formula) cannot serve as an upsert key. Critical for any integration.</div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">🟡 Medium Priority</div>
+      <div class="rec rec-med"><strong>Restrict FLS on 108 over-permissioned fields.</strong> 66% of all Opp fields are granted to 15+ profiles but hold ≤5% data. Restrict to sales-relevant profiles only.</div>
+      <div class="rec rec-med"><strong>Convert Proposed Category, Brand, Designation/s, and Industry Type to Picklist.</strong> All have 66 FLS grants — highly visible. Free text here reduces reporting accuracy.</div>
+      <div class="rec rec-med"><strong>Consolidate 44 permission sets.</strong> Group into Permission Set Groups by function: Sales, Ops, Integration, Admin. Reduces maintenance complexity.</div>
+    </div>
+    <div>
+      <div style="font-size:8px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.6px;margin-bottom:3px">🟢 Low Priority</div>
+      <div class="rec rec-low"><strong>Revenue roll-up structure is solid.</strong> 10 roll-ups + 5 formulas at 100% with appropriate FLS. No action needed.</div>
+      <div class="rec rec-low"><strong>Review SC_ prefix fields.</strong> Cost to Deliver % and Margin % (both formulas, both 0%) may depend on empty source fields. Validate formula references before deletion.</div>
+      <div class="rec rec-low"><strong>Fix Funding Packet Received typo</strong> — 66 grants make this highly visible. Create replacement, migrate data, deprecate.</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">FANBaseball — Opportunity Object Deep-Dive with Field-Level Security &nbsp;|&nbsp; April 6, 2026 &nbsp;|&nbsp; Data Integrity: Unmodified source analysis</div>
+</body>
+</html>
