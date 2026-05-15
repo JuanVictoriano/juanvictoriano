@@ -78,22 +78,79 @@
         <section id="web_form_section" class="web_form_section">
             <h2>share your email with me</h2>
             <div class="web_form">
-                <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dbm00000AkTVu" method="POST">
-                    <input type=hidden name="oid" value="00Dbm00000AkTVu">
-                    <input type=hidden name="retURL" value="https://www.salesforce.com">
-                    <!--  ----------------------------------------------------------------------  -->
-                    <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
-                    <!--  these lines if you wish to test in debug mode.                          -->
-                    <!--  <input type="hidden" name="debug" value=1>                              -->
-                    <!--  <input type="hidden" name="debugEmail"                                  -->
-                    <!--  value="jvictoriano410@gmail.com">                                       -->
-                    <!--  ----------------------------------------------------------------------  -->
-                    <label for="first_name">First Name</label><input  id="first_name" maxlength="40" name="first_name" size="20" type="text" /><br>
-                    <label for="last_name">Last Name</label><input  id="last_name" maxlength="80" name="last_name" size="20" type="text" /><br>
-                    <label for="email">Email</label><input  id="email" maxlength="80" name="email" size="20" type="text" /><br>
-                    <input type="submit" name="submit">
-                    </form>
-            </div>
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=00Dbm00000AkTVu" method="POST">
+
+        <input type="hidden" name="oid" value="00Dbm00000AkTVu">
+        <input type="hidden" name="retURL" value="https://www.salesforce.com">
+
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+        <!--  these lines if you wish to test in debug mode.                          -->
+        <!--  <input type="hidden" name="debug" value="1">                            -->
+        <!--  <input type="hidden" name="debugEmail"                                  -->
+        <!--  value="jvictoriano410@gmail.com">                                       -->
+        <!--  ----------------------------------------------------------------------  -->
+
+        <table>
+            <tr>
+                <td>
+                    <label for="first_name">First Name</label>
+                </td>
+                <td>
+                    <input
+                        id="first_name"
+                        name="first_name"
+                        type="text"
+                        maxlength="40"
+                        size="30"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="last_name">Last Name</label>
+                </td>
+                <td>
+                    <input
+                        id="last_name"
+                        name="last_name"
+                        type="text"
+                        maxlength="80"
+                        size="30"
+                        required
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <label for="email">Email</label>
+                </td>
+                <td>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        maxlength="80"
+                        size="30"
+                        required
+                        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                        title="Please enter a valid email address (e.g. name@example.com)"
+                    />
+                </td>
+            </tr>
+
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="submit" value="Submit" />
+                </td>
+            </tr>
+        </table>
+
+    </form>
+</div>
         </section>
     </main>
     <footer>
