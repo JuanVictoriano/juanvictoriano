@@ -50,7 +50,7 @@ html {
 body {
     margin: 0;
     padding: 0;
-    font-family: 'F37 Judge', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Arial', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
     background-color: var(--color-bg);
     color: var(--color-text);
     line-height: 1.6;
