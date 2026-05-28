@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="IT System Administrator Cheat Sheet — Unix/Linux, PowerShell, network ports, and the gold rules every SysAdmin lives by.">
+<meta name="description" content="IT System Administrator Cheat Sheet — Unix/Linux, PowerShell, network ports, Salesforce development with VS Code, and the gold rules every SysAdmin lives by.">
 <meta name="theme-color" content="#333333">
 <title>IT SysAdmin Essential Guide</title>
  
@@ -559,6 +559,7 @@ a:focus-visible {
         <a href="#powershell">PowerShell</a>
         <a href="#network">Network</a>
         <a href="#rules">Rules</a>
+        <a href="#salesforce">Salesforce</a>
     </div>
 </nav>
  
@@ -566,13 +567,7 @@ a:focus-visible {
     <div class="header-inner">
         <div class="header-label">Essential Reference Guide</div>
         <h1>IT System Administrator<br>Cheat Sheet</h1>
-        <p class="header-desc">A practical reference for Unix/Linux, PowerShell, network ports, and the gold rules every SysAdmin lives by.</p>
-        <div class="header-stats">
-            <div class="stat"><span class="stat-val">4</span><span class="stat-label">Sections</span></div>
-            <div class="stat"><span class="stat-val">7</span><span class="stat-label">Unix Commands</span></div>
-            <div class="stat"><span class="stat-val">6</span><span class="stat-label">PS Cmdlets</span></div>
-            <div class="stat"><span class="stat-val">14</span><span class="stat-label">Key Ports</span></div>
-        </div>
+        <p class="header-desc">A practical reference for Unix/Linux, PowerShell, network ports, Salesforce development with VS Code, and the gold rules every SysAdmin lives by.</p>
     </div>
 </header>
  
@@ -585,6 +580,8 @@ a:focus-visible {
             <li><span class="pill pill-powershell">PowerShell</span> Windows automation</li>
             <li><span class="pill pill-network">Network</span> ports &amp; protocols</li>
             <li><span class="pill pill-rule">Rule</span> gold standard practices</li>
+            <li><span class="pill pill-sf">SF</span> Salesforce CLI</li>
+            <li><span class="pill pill-git">Git</span> version control</li>
             <li><span class="pill pill-tip">Warning</span> proceed with caution</li>
         </ul>
     </section>
@@ -690,6 +687,137 @@ a:focus-visible {
                     <span class="card-code">sudo !!</span>
                 </div>
             </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Secure Remote Login</span>
+                    </div>
+                    <div class="card-desc">The backbone of remote administration &mdash; encrypted shell access to any machine. Add <code>-i ~/.ssh/key.pem</code> for key-based auth and <code>-p [port]</code> for a non-standard SSH port.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">ssh user@host</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Smart File Sync</span>
+                    </div>
+                    <div class="card-desc">Copies only changed bytes, resumes interrupted transfers, and preserves permissions &mdash; far superior to <code>scp</code> for large or repeated transfers. Add <code>--dry-run</code> to preview before committing.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">rsync -avz src/ dest/</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Service Management (systemd)</span>
+                    </div>
+                    <div class="card-desc">Inspect, start, stop, and restart services. <code>systemctl enable --now [svc]</code> starts a service immediately and sets it to launch on boot in a single command.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">systemctl status [svc]</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Systemd Log Streaming</span>
+                    </div>
+                    <div class="card-desc">Follow logs for a specific service in real time. Filter with <code>--since "1 hour ago"</code> or <code>-p err</code> for errors only &mdash; the modern alternative to grepping through <code>/var/log</code>.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">journalctl -u [svc] -f</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Locate Files</span>
+                    </div>
+                    <div class="card-desc">Recursively search by name, size, modification time, or permissions. Combine with <code>-exec</code> to act on every match &mdash; e.g. <code>-exec rm {} \;</code> to delete results.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">find / -name "*.conf"</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Change Ownership</span>
+                    </div>
+                    <div class="card-desc">Reassigns file and directory ownership; <code>-R</code> applies recursively. Frequently paired with <code>chmod</code> when fixing permission issues after a deploy or file copy.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">chown -R user:group [dir]</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Find a Process</span>
+                    </div>
+                    <div class="card-desc">A full snapshot of running processes with CPU and memory usage. Pipe through <code>grep</code> to locate a specific service before inspecting, restarting, or killing it.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">ps aux | grep [name]</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="pill pill-tip">Warning</span>
+                        <span class="card-title">Terminate Processes</span>
+                    </div>
+                    <div class="card-desc">Try a graceful <code>kill -15</code> (SIGTERM) first to let a process clean up. Only escalate to <code>kill -9</code> (SIGKILL) when it's truly unresponsive. <code>pkill [name]</code> kills by name instead of PID.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">kill -9 [PID]</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Schedule Jobs</span>
+                    </div>
+                    <div class="card-desc">Edit the cron table to automate recurring tasks. Format is <code>min hour day month weekday command</code>. List existing jobs with <code>crontab -l</code> before adding new ones.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">crontab -e</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-unix">Unix</span>
+                        <span class="card-title">Archive &amp; Compress</span>
+                    </div>
+                    <div class="card-desc">Bundle a directory into a gzipped tarball for backups or transfers. Extract with <code>tar -xzvf archive.tar.gz</code>. Flags: <code>c</code> create, <code>z</code> gzip, <code>v</code> verbose, <code>f</code> file.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">tar -czvf out.tar.gz [dir]</span>
+                </div>
+            </li>
         </ul>
     </section>
  
@@ -779,6 +907,111 @@ a:focus-visible {
                 </div>
                 <div class="card-right">
                     <span class="card-code">Invoke-Command</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">The Help System</span>
+                    </div>
+                    <div class="card-desc">Your first stop for any unfamiliar cmdlet &mdash; <code>-Examples</code> shows real-world usage. Run <code>Update-Help</code> once to download the latest documentation locally.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Get-Help [cmdlet] -Examples</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">Discover Cmdlets</span>
+                    </div>
+                    <div class="card-desc">Search for cmdlets by name or noun using wildcards. Indispensable when you know what you want to do but can't remember which cmdlet actually does it.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Get-Command *service*</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">List &amp; Search Files</span>
+                    </div>
+                    <div class="card-desc">The <code>ls</code>/<code>dir</code> equivalent. <code>-Recurse</code> walks subdirectories; pipe to <code>Where-Object</code> to filter by size, date, or extension.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Get-ChildItem -Recurse</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">Top Resource Hogs</span>
+                    </div>
+                    <div class="card-desc">Surface the processes consuming the most CPU. Pair with <code>Stop-Process -Name [name] -Force</code> to terminate a runaway task once you've identified it.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Get-Process | Sort CPU -Desc</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">CSV Data Handling</span>
+                    </div>
+                    <div class="card-desc">Read and write CSV files as objects &mdash; the backbone of bulk user provisioning, reporting, and AD batch operations. Use <code>-NoTypeInformation</code> to keep exports clean.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Import-Csv / Export-Csv</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">System Inventory</span>
+                    </div>
+                    <div class="card-desc">Query hardware and OS details &mdash; disks, memory, BIOS, network adapters. The modern replacement for <code>Get-WmiObject</code>, and it works over WinRM for remote inventory.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Get-CimInstance</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="pill pill-tip">Warning</span>
+                        <span class="card-title">Enable Script Execution</span>
+                    </div>
+                    <div class="card-desc">Allows locally-created scripts to run while still requiring downloaded ones to be signed. Scope it with <code>-Scope CurrentUser</code> to avoid a machine-wide policy change.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">Set-ExecutionPolicy RemoteSigned</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-powershell">PowerShell</span>
+                        <span class="card-title">Secure Credentials</span>
+                    </div>
+                    <div class="card-desc">Prompts for and stores credentials securely for use with <code>-Credential</code> on remote cmdlets. Never hard-code passwords in scripts &mdash; this is the right way to handle auth.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-code">$cred = Get-Credential</span>
                 </div>
             </li>
         </ul>
@@ -880,6 +1113,19 @@ a:focus-visible {
                         <span class="card-port">:389 / :636</span>
                     </div>
                 </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">Global Catalog &mdash; AD Forest Queries</span>
+                        </div>
+                        <div class="card-desc">Used by domain controllers to serve forest-wide directory lookups. 3268 is plaintext; prefer 3269 (SSL). Open these between sites in a multi-domain forest.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:3268 / :3269</span>
+                    </div>
+                </li>
             </ul>
         </div>
  
@@ -916,6 +1162,20 @@ a:focus-visible {
                     <div class="card-left">
                         <div class="card-top">
                             <span class="pill pill-network">Network</span>
+                            <span class="pill pill-tip">Warning</span>
+                            <span class="card-title">FTP &mdash; File Transfer Protocol</span>
+                        </div>
+                        <div class="card-desc">Plaintext file transfer &mdash; 21 is control, 20 is data. Credentials travel unencrypted, so prefer SFTP (:22) or FTPS. Avoid on any untrusted network.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:20 / :21</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
                             <span class="card-title">SMB &mdash; Windows File Sharing</span>
                         </div>
                         <div class="card-desc">Used for Windows network shares, printers, and inter-process communication. Block this at your perimeter firewall &mdash; it should never be exposed to the internet (EternalBlue).</div>
@@ -935,6 +1195,133 @@ a:focus-visible {
                     </div>
                     <div class="card-right">
                         <span class="card-port">:2049</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+ 
+        <div class="port-group">
+            <div class="port-group-label">Databases</div>
+            <ul class="cards">
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">MySQL / MariaDB</span>
+                        </div>
+                        <div class="card-desc">The most common open-source relational database port. Never expose it to the internet &mdash; bind to localhost or a private subnet and front it with a firewall rule.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:3306</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">PostgreSQL</span>
+                        </div>
+                        <div class="card-desc">The default for "Postgres." Lock down access in <code>pg_hba.conf</code> and require SSL for any remote connections handling sensitive data.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:5432</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">Microsoft SQL Server</span>
+                        </div>
+                        <div class="card-desc">The default for MSSQL. Named instances may use dynamic ports brokered via the SQL Browser service on UDP 1434 &mdash; check both when troubleshooting connectivity.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:1433</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">Oracle Database / MongoDB / Redis</span>
+                        </div>
+                        <div class="card-desc">Oracle TNS listener on 1521, MongoDB on 27017, Redis on 6379. All should be firewalled to app servers only &mdash; exposed Redis and Mongo instances are routinely scanned and breached.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:1521 / :27017 / :6379</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+ 
+        <div class="port-group">
+            <div class="port-group-label">Infrastructure &amp; Monitoring</div>
+            <ul class="cards">
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">DHCP &mdash; Dynamic IP Assignment</span>
+                        </div>
+                        <div class="card-desc">Server listens on 67, clients on 68 (UDP). If devices can't get an IP, check that DHCP traffic isn't being blocked across VLANs &mdash; you may need an IP helper/relay.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:67 / :68</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">NTP &mdash; Network Time Protocol (UDP)</span>
+                        </div>
+                        <div class="card-desc">Keeps clocks in sync across the network. Critical for Kerberos auth, TLS validation, and log correlation &mdash; clock skew breaks AD logins and SIEM timelines.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:123</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">SNMP &mdash; Device Monitoring (UDP)</span>
+                        </div>
+                        <div class="card-desc">161 for polling devices, 162 for traps. Use SNMPv3 with auth &amp; encryption &mdash; v1/v2c community strings are sent in clear text and are a common recon target.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:161 / :162</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">Kerberos &mdash; AD Authentication</span>
+                        </div>
+                        <div class="card-desc">The authentication protocol behind Active Directory logons (TCP/UDP). If Kerberos breaks, single sign-on fails &mdash; nearly always tied to DNS or time-sync (NTP) issues.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:88</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-network">Network</span>
+                            <span class="card-title">Syslog &mdash; Centralized Logging (UDP)</span>
+                        </div>
+                        <div class="card-desc">The standard for shipping logs from network devices and servers to a central collector or SIEM. Use TCP/TLS (often 6514) in production to avoid dropped messages.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-port">:514</span>
                     </div>
                 </li>
             </ul>
@@ -1003,7 +1390,412 @@ a:focus-visible {
                     <span class="card-rule-num">04</span>
                 </div>
             </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-rule">Rule</span>
+                        <span class="card-title">Monitor Before It Breaks</span>
+                    </div>
+                    <div class="card-desc">If a system isn't monitored, you'll learn it's down from angry users &mdash; the worst possible alert. Set up proactive monitoring and alerting on disk, CPU, memory, and service health before you actually need it.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-rule-num">05</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-rule">Rule</span>
+                        <span class="card-title">Automate the Repetitive</span>
+                    </div>
+                    <div class="card-desc">Anything you do by hand more than twice is a candidate for a script. Automation removes human error, documents the process as code, and frees you for work that actually requires judgment.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-rule-num">06</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-rule">Rule</span>
+                        <span class="card-title">Test in Staging First</span>
+                    </div>
+                    <div class="card-desc">Never let production be the first place a change runs. Mirror prod as closely as possible in a staging environment and validate there &mdash; your users are not your QA team.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-rule-num">07</span>
+                </div>
+            </li>
+ 
+            <li class="card">
+                <div class="card-left">
+                    <div class="card-top">
+                        <span class="pill pill-rule">Rule</span>
+                        <span class="card-title">Change One Thing at a Time</span>
+                    </div>
+                    <div class="card-desc">When troubleshooting, change a single variable, then re-test. Stacking multiple changes at once makes it impossible to know what actually fixed &mdash; or broke &mdash; the system.</div>
+                </div>
+                <div class="card-right">
+                    <span class="card-rule-num">08</span>
+                </div>
+            </li>
         </ul>
+    </section>
+ 
+    <!-- SECTION 5 -->
+    <section id="salesforce" class="phase phase-5">
+        <div class="phase-header">
+            <span class="phase-num">05 /</span>
+            <div class="phase-title-block">
+                <h2>Salesforce Development &amp; VS Code</h2>
+                <div class="phase-subtitle">Source-driven development with the Salesforce CLI (sf v2), Git version control, and the practices that keep an org deployable &mdash; the commands every admin-developer should know cold.</div>
+            </div>
+        </div>
+ 
+        <div class="port-group">
+            <div class="port-group-label">Salesforce CLI (sf v2)</div>
+            <ul class="cards">
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Authorize an Org</span>
+                        </div>
+                        <div class="card-desc">Opens a browser to log in and stores the connection under an alias. <code>--set-default</code> makes it the target for later commands. For sandboxes, add <code>--instance-url https://test.salesforce.com</code>.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf org login web --alias dev --set-default</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">List Connected Orgs</span>
+                        </div>
+                        <div class="card-desc">Shows every authorized org, its alias, and connection status. Use <code>sf org display</code> for one org's details (instance URL, access token) or <code>sf config set target-org=dev</code> to switch the default.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf org list</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Scaffold a Project</span>
+                        </div>
+                        <div class="card-desc">Creates a new DX project with the standard structure (<code>force-app</code>, <code>config</code>, <code>sfdx-project.json</code>). In VS Code, the same thing runs via <strong>SF: Create Project</strong> in the Command Palette.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf project generate --name MyProject</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Retrieve (Pull) Metadata</span>
+                        </div>
+                        <div class="card-desc">Pulls components from an org into your local project. Use <code>--manifest manifest/package.xml</code> to retrieve exactly what's listed in your package manifest, or <code>--metadata ApexClass</code> for a single type.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf project retrieve start --metadata ApexClass</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="pill pill-tip">Warning</span>
+                            <span class="card-title">Deploy (Push) Metadata</span>
+                        </div>
+                        <div class="card-desc">Pushes local changes to an org. Always validate first with <code>--dry-run</code>, and for production add <code>--test-level RunLocalTests</code>. Treat a manual prod deploy as a last resort.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf project deploy start --source-dir force-app</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Run Anonymous Apex</span>
+                        </div>
+                        <div class="card-desc">Executes an Apex script from a file (or interactively with no flag &mdash; type, then Ctrl+D). Perfect for one-off data fixes and quick logic checks without opening the Developer Console.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf apex run --file script.apex</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Run Apex Tests</span>
+                        </div>
+                        <div class="card-desc">Run tests from the terminal with coverage. Add <code>--synchronous</code> for local dev or <code>--class-names MyTest</code> to target specific classes. Salesforce requires 75% org-wide coverage to deploy to production.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf apex run test --code-coverage --result-format human</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Run a SOQL Query</span>
+                        </div>
+                        <div class="card-desc">Query records straight from the terminal. Add <code>--result-format csv > out.csv</code> to export results, or <code>--use-tooling-api</code> to query metadata objects like <code>ApexClass</code> and <code>EntityDefinition</code>.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf data query --query "SELECT Id, Name FROM Account LIMIT 10"</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Create a Scratch Org</span>
+                        </div>
+                        <div class="card-desc">Spins up a disposable, source-driven org for isolated feature work. Define its shape in <code>project-scratch-def.json</code>. Delete it when done with <code>sf org delete scratch --target-org scratch</code>.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf org create scratch --definition-file config/project-scratch-def.json --alias scratch</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Stream Debug Logs</span>
+                        </div>
+                        <div class="card-desc">Watch debug logs live as code executes &mdash; invaluable for debugging triggers, flows, and integrations in real time without refreshing the log list. Add <code>--color</code> for readable output.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf apex tail log --color</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">SF</span>
+                            <span class="card-title">Open the Org in a Browser</span>
+                        </div>
+                        <div class="card-desc">Launches the default org in your browser, already authenticated &mdash; no re-login. Add <code>--path lightning/setup/SetupOneHome/home</code> to jump straight into Setup.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">sf org open</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+ 
+        <div class="port-group">
+            <div class="port-group-label">Git Version Control</div>
+            <ul class="cards">
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Clone a Repo</span>
+                        </div>
+                        <div class="card-desc">Copies a remote repository locally, including its full commit history. The first step when joining an existing Salesforce project or pulling down a teammate's work.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git clone [url]</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Create a Feature Branch</span>
+                        </div>
+                        <div class="card-desc">Branch off for every piece of work. Keeps <code>main</code> clean and deployable and makes pull requests reviewable. Never commit metadata straight to <code>main</code>.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git checkout -b feature/my-change</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Review Changes</span>
+                        </div>
+                        <div class="card-desc"><code>status</code> shows what's staged or modified; <code>diff</code> shows the exact line changes. Always review before committing &mdash; a metadata retrieve often pulls noisy, unrelated changes you don't want.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git status / git diff</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Stage &amp; Commit</span>
+                        </div>
+                        <div class="card-desc">Stage specific files (avoid a blanket <code>git add .</code>) and commit with a clear, present-tense message. Small, focused commits are far easier to review &mdash; and to revert &mdash; later.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git add [files] &amp;&amp; git commit -m "msg"</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Sync with Remote</span>
+                        </div>
+                        <div class="card-desc">Push your branch to the remote and pull teammates' work. Pull (or rebase) frequently &mdash; the longer a branch drifts, the uglier the merge conflicts get on shared metadata files.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git push origin [branch] / git pull</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Shelve Work in Progress</span>
+                        </div>
+                        <div class="card-desc">Temporarily sets aside uncommitted changes so you can switch context &mdash; say, an urgent production fix. Restore it later with <code>git stash pop</code>.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git stash</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Safely Undo a Commit</span>
+                        </div>
+                        <div class="card-desc">Creates a new commit that reverses a previous one <em>without</em> rewriting history &mdash; safe on shared branches, unlike <code>git reset</code>. The go-to for backing out a bad change cleanly.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git revert [commit]</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-git">Git</span>
+                            <span class="card-title">Inspect History</span>
+                        </div>
+                        <div class="card-desc">A compact, visual view of the commit tree across branches. Narrow it with <code>--author</code>, a date range, or a file path to trace exactly when a change landed.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-code">git log --oneline --graph</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+ 
+        <div class="port-group">
+            <div class="port-group-label">Best Practices</div>
+            <ul class="cards">
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="card-title">Version Control Everything</span>
+                        </div>
+                        <div class="card-desc">Treat metadata as source code. Every class, flow, layout, and permission set lives in Git &mdash; the org is never the source of truth. This makes changes reviewable, traceable, and reversible.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">01</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="card-title">Never Deploy Straight to Prod</span>
+                        </div>
+                        <div class="card-desc">Promote changes through a pipeline: scratch/dev &rarr; integration &rarr; UAT &rarr; prod, ideally via CI/CD (GitHub Actions, Gearset, Copado). Manual production deploys are how Fridays get ruined.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">02</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="pill pill-tip">Warning</span>
+                            <span class="card-title">Bulkify Your Apex</span>
+                        </div>
+                        <div class="card-desc">Never put SOQL queries or DML statements inside loops. Write triggers and classes to operate on collections of records so they survive bulk operations and stay clear of governor limits.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">03</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="card-title">Write Real Test Coverage</span>
+                        </div>
+                        <div class="card-desc">Aim well above the 75% minimum, and write tests that actually <em>assert</em> behavior &mdash; not just exercise lines. Use <code>Test.startTest()/stopTest()</code> and test-data factories for realistic, isolated data.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">04</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="card-title">Use a .forceignore</span>
+                        </div>
+                        <div class="card-desc">Exclude noisy or environment-specific metadata (full <code>*.profile-meta.xml</code> files, org settings) from retrieves and deploys. Keeps diffs clean and avoids clobbering org-specific configuration.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">05</span>
+                    </div>
+                </li>
+ 
+                <li class="card">
+                    <div class="card-left">
+                        <div class="card-top">
+                            <span class="pill pill-sf">Best Practice</span>
+                            <span class="card-title">Mind Your Branching Model</span>
+                        </div>
+                        <div class="card-desc">Adopt a consistent strategy &mdash; e.g. feature branches reviewed via pull request into <code>main</code>. Tie branches to work items, require review before merge, and keep <code>main</code> always deployable.</div>
+                    </div>
+                    <div class="card-right">
+                        <span class="card-rule-num">06</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
     </section>
  
     <!-- QUICK REFERENCE -->
@@ -1012,6 +1804,7 @@ a:focus-visible {
         <p><strong>Unix/Linux commands</strong> work on any modern Linux distro and macOS terminal. Some (like <code>netstat</code>) may require <code>net-tools</code> to be installed &mdash; on newer systems, <code>ss -tulpn</code> is the preferred alternative.</p>
         <p><strong>PowerShell cmdlets</strong> require the appropriate modules &mdash; <code>Get-ADUser</code> needs the <code>ActiveDirectory</code> RSAT module installed. Run PowerShell as Administrator for any commands that touch services, event logs, or remote machines.</p>
         <p><strong>Port numbers</strong> listed are defaults &mdash; applications can be configured to listen on non-standard ports. Always verify with <code>netstat</code> or <code>ss</code> rather than assuming.</p>
+        <p><strong>Salesforce CLI</strong> commands use the modern <code>sf</code> (v2) syntax; the deprecated <code>sfdx force:*</code> commands have been retired. Verify your version with <code>sf --version</code> and stay current with <code>sf plugins update</code>. Install the <strong>Salesforce Extension Pack</strong> in VS Code to run most of these straight from the Command Palette.</p>
     </section>
  
 </main>
