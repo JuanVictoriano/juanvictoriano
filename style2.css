@@ -262,6 +262,9 @@ a:focus-visible {
 .contact.no-select {
     pointer-events: none;
 }
+.about.no-select {
+    pointer-events: none;
+}
 
 /* =========================================================
    Resume (kept ready in case the section is re-enabled)
