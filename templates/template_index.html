@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <META HTTP-EQUIV="Content-type" CONTENT="text/html; charset=UTF-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="[YOUR NAME] — [YOUR TITLE/TAGLINE]. [Short one-sentence description for search engines.]">
+    <meta name="theme-color" content="#333333">
+    <title>[PAGE TITLE]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="template_style.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous" defer></script>
+</head>
+<body>
+    <nav aria-label="Primary">
+        <div class="nav-inner">
+            <a href="#about">about</a>
+            <a href="#learning">learning</a>
+            <a href="#web_form_section">contact me</a>
+            <a href="#resume">resume</a>
+        </div>
+    </nav>
+    <header>
+        <h1 class="no-select">[YOUR NAME]</h1>
+        <p class="tagline no-select">[YOUR TITLE / TAGLINE]</p>
+    </header>
+    <main>
+        <section class="photo">
+            <h2>Hello!</h2>
+            <img id="profile-pic" src="[PROFILE_IMAGE.jpg]" alt="[YOUR NAME]" loading="lazy" decoding="async" width="180" height="180">
+        </section>
+        <section id="about" class="about-me no-select">
+            <h2>&#128187; about me</h2>
+            <p>[YOUR ABOUT ME PARAGRAPH — a few sentences summarizing your experience, skills, and background.]</p>
+        </section>
+        <section id="learning" class="learning">
+            <h2>&#128218; learning</h2>
+            <ul>
+                <li><a href="[LEARNING_LINK_URL]" target="_blank" rel="noopener noreferrer">[LEARNING LINK TEXT]</a></li>
+                <!-- Add more <li> items as needed -->
+            </ul>
+        </section>
+        <!--<section id="contact" class="contact no-select">
+            <h2>&#128242; contact me</h2>
+            <ul>
+                <li><i class="fas fa-envelope" aria-hidden="true"></i> [YOUR_EMAIL@example.com]</li>
+                <li><i class="fas fa-phone" aria-hidden="true"></i> [YOUR PHONE NUMBER]</li>
+            </ul>
+        </section>-->
+        <section class="social">
+            <h2>&#128279; other links</h2>
+            <ul>
+                <li><a href="[LINKEDIN_URL]" target="_blank" rel="noopener noreferrer"><i class="fab fa-linkedin" aria-hidden="true"></i> LinkedIn</a></li>
+                <li><a href="[GITHUB_URL]" target="_blank" rel="noopener noreferrer"><i class="fab fa-github" aria-hidden="true"></i> GitHub</a></li>
+                <!-- Add more social links as needed -->
+            </ul>
+        </section>
+        <section id="resume" class="resume">
+            <h2>&#128196;<a href="[RESUME_HTML_URL]" target="_blank" rel="noopener noreferrer">click here for html version</a></h2>
+            <iframe src="[RESUME_FILE.pdf]"></iframe>
+            <div class="download-resume">
+                <a href="[RESUME_FILE.pdf]" download><i class="fas fa-download"></i> download my resume</a>
+            </div>
+        </section>
+        <section id="web_form_section" class="web_form_section">
+            <h2>&#128231; share your name and email</h2>
+            <div class="web_form">
+    <!-- Salesforce Web-to-Lead form: replace [ORG_ID] with your org's ID (Setup > Web-to-Lead) -->
+    <form action="https://webto.salesforce.com/servlet/servlet.WebToLead?encoding=UTF-8&orgId=[ORG_ID]" method="POST">
+        <input type="hidden" name="oid" value="[ORG_ID]">
+        <input type="hidden" name="retURL" value="[RETURN_URL]">
+        <!--  ----------------------------------------------------------------------  -->
+        <!--  NOTE: These fields are optional debugging elements. Please uncomment    -->
+        <!--  these lines if you wish to test in debug mode.                          -->
+        <!--  <input type="hidden" name="debug" value="1">                            -->
+        <!--  <input type="hidden" name="debugEmail"                                  -->
+        <!--  value="[YOUR_EMAIL@example.com]">                                       -->
+        <!--  ----------------------------------------------------------------------  -->
+        <table>
+            <tr>
+                <td>
+                    <label for="first_name">First Name</label>
+                </td>
+                <td>
+                    <input
+                        id="first_name"
+                        name="first_name"
+                        type="text"
+                        maxlength="40"
+                        size="30"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="last_name">Last Name</label>
+                </td>
+                <td>
+                    <input
+                        id="last_name"
+                        name="last_name"
+                        type="text"
+                        maxlength="80"
+                        size="30"
+                        required
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="email">Email</label>
+                </td>
+                <td>
+                    <input
+                        id="email"
+                        name="email"
+                        type="email"
+                        maxlength="80"
+                        size="30"
+                        required
+                        pattern="^[^\s@]+@[^\s@]+\.[^\s@]+$"
+                        title="Please enter a valid email address (e.g. name@example.com)"
+                    />
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <input type="submit" name="submit" value="Submit" />
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+        </section>
+    </main>
+    <footer>
+        <p id="footer-text"></p>
+    </footer>
+    <script>
+        // Footer date stamp
+        const today = new Date();
+        const formattedDate = `${today.getMonth() + 1}/${today.getDate()}/${today.getFullYear()}`;
+        document.getElementById('footer-text').textContent = `${formattedDate}, thank you for visiting my website`;
+        // Reveal sections on scroll, with reduced-motion fallback
+        const sections = document.querySelectorAll('section');
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (prefersReducedMotion || !('IntersectionObserver' in window)) {
+            sections.forEach(section => section.classList.add('is-visible'));
+        } else {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+            sections.forEach(section => observer.observe(section));
+        }
+    </script>
+</body>
+</html>
